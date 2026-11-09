@@ -11,7 +11,7 @@ model = torchvision.models.resnet50(weights = None).eval()
 x = torch.randn(1,3,224,224)
 # random image object
 
-#coverts the image that is python into mathematical operations that our model can understand
+#runs the image through the model and gets mathematical values.
 scripted = torch.jit.trace(model, x).eval()
 
 
@@ -36,7 +36,7 @@ with tvm.transform.PassContext(opt_level = 3):
     lib = relay.build(mod, target = target, params = params)
 # first line of the block assigns the effort the TVM compiler should try to optimize
 # second line does the compiling, taking the model of the item and its weight and turns them into fast code for my CPU
-# turns the modle into CPU code
+# turns the model into CPU code
 
 
 #loads the compiled model onto my CPU
@@ -50,7 +50,7 @@ m.run()
 
 # test part to see if the code above works
 out = m.get_output(0).numpy()
-#gets the model's output which shoudl be 1000
+#gets the model's output which should be 1000
 
 # gets the time how long the model runs for
 # used for step 5
@@ -64,6 +64,8 @@ print(out.shape)
 # My GPU was too new for TVM v0.15
 # target = tvm.target.Target("cuda") had to change it to target = tvm.target.Target("cuda -arch=sm_90")
 #switched from my gpu to cpu do to issues with compiling the model
+
+#Step 4 addition
 open("relay_float.txt", "w").write(str(mod))
-#turns the quantized model into text and saves it to file called relay_int8.txt
+#turns the quantized model into text and saves it to file called relay_float.txt
 print(str(mod).count('dtype="int8"'))

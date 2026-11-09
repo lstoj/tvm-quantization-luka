@@ -44,11 +44,13 @@ m.run()
 
 out = m.get_output(0).numpy()
 
+#Step 5
 print(m.benchmark(dev,repeat = 10, number = 10))
 
 
 print(out.shape)
 
+#Step 4 addition
 open("relay_int8.txt", "w").write(str(mod))
 #turns the quantized model into text and saves it to file called relay_int8.txt
 print(str(mod).count('dtype="int8"'))

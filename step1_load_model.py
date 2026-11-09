@@ -10,5 +10,5 @@ x = torch.randn(1,3,224,224)
 # creates an image with 3 different color types that is 224 x 224
 
 test = model(x)
-# testing out if I set it u
+# testing out if works
 print(test.shape)
